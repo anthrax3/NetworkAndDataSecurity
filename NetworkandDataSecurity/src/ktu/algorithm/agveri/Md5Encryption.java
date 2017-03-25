@@ -1,4 +1,4 @@
-package ktu.proje.agveri;
+package ktu.algorithm.agveri;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
