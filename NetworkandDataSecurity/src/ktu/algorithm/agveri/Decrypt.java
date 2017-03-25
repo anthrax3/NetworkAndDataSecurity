@@ -1,4 +1,4 @@
-package ktu.proje.agveri;
+package ktu.algorithm.agveri;
 
 import java.io.BufferedReader;
 import java.io.File;
