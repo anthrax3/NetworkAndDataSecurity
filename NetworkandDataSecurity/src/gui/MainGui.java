@@ -5,11 +5,15 @@
  */
 package gui;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import javafx.stage.FileChooser;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import ktu.algorithm.agveri.Md5Encryption;
 
 /**
  *
@@ -67,6 +71,11 @@ public class MainGui extends javax.swing.JFrame {
         });
 
         jButton3.setText("Hashle");
+        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton3MouseClicked(evt);
+            }
+        });
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -223,6 +232,7 @@ public class MainGui extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
+    private String Inputfile;
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         // TODO add your handling code here:
         int returnVal = fileChooser.showOpenDialog(this);
@@ -231,6 +241,7 @@ public class MainGui extends javax.swing.JFrame {
             try{
                 openPath.read(new FileReader(file.getAbsoluteFile() ), null);
                 openPath.setText(file.getAbsolutePath());
+                Inputfile = file.getAbsolutePath().toString();
             }catch(IOException ex){
                 System.out.println("problem accessing file"+file.getAbsolutePath());
             }
@@ -238,6 +249,34 @@ public class MainGui extends javax.swing.JFrame {
             System.out.println("File access cancelled by user");
         }
     }//GEN-LAST:event_OpenActionPerformed
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        Md5Encryption md5 = new Md5Encryption();
+       // System.out.println(Inputfile);
+                String inFile = Inputfile; // The name of the file to be read in
+		String line = ""; // Store each line of the file here
+		String text = ""; // Store the entire file's text here
+		// Try to instantiate both readers
+		try {
+			FileReader reader = new FileReader(inFile); // Create a filereader
+			BufferedReader bReader = new BufferedReader(reader);
+			// Try to actually read from the file
+			try {
+				while ((line = bReader.readLine()) != null) {
+					text = text + line;
+				}
+				System.out.println("Successfully read plaintext from file!");
+				bReader.close();
+			} catch (IOException e) {
+				System.out.println("Error reading file!");
+			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println("File not found or does not exist!");
+		}
+        hashVar.setText(md5.hash(text));
+    }//GEN-LAST:event_jButton3MouseClicked
 
     /**
      * @param args the command line arguments
