@@ -1,4 +1,4 @@
-package ktu.algorithm.agveri;
+package ktu.agveri.crypt;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -157,8 +157,8 @@ public class KeyGenerator {
 	 * NOTES: Main calls the object constructor which will generate all three
 	 * keys, p, q, and n, and then write them to the correct files.
 	 */
-	public static void main(String args[]) {
+	/*public static void main(String args[]) {
 		KeyGenerator generateKeys = new KeyGenerator();
-	}
+	}*/
 
 }
