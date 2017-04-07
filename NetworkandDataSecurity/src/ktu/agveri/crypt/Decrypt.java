@@ -1,4 +1,4 @@
-package ktu.algorithm.agveri;
+package ktu.agveri.crypt;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -22,76 +22,74 @@ public class Decrypt {
 	}
 
 	private String ReadEncryptedText() {
-		String inFile = "Encrypted.txt"; // The name of the file to be read in
-		String line = ""; // Store each line of the file here
-		String text = ""; // Store the entire file's text here
-		// Try to instantiate both readers
+		String inFile = "/home/mcanv/Downloads/AgVeriFiles/Encrypted.txt";
+		String line = ""; 
+		String text = ""; 
 		try {
-			FileReader reader = new FileReader(inFile); // Create a filereader
+			FileReader reader = new FileReader(inFile); 
 			BufferedReader bReader = new BufferedReader(reader);
-			// Try to actually read from the file
 			try {
 				while ((line = bReader.readLine()) != null) {
 					text = text + line;
 				}
-				System.out.println("Successfully read encryptedtext from file!");
+				System.out.println("Şifreli dosya okundu");
 				bReader.close();
 				return text;
 			} catch (IOException e) {
-				System.out.println("Error reading file!");
+				System.out.println("dosya okunamadi!");
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found or does not exist!");
+			System.out.println("dosya bulunadi!");
 		}
 		return text;
 	}
 
 	private void ComputeRoots(BigInteger c, BigInteger p, BigInteger q) {
 
-		BigInteger[] roots; // Holds solution to yp*p + yq*q = 1
-		roots = new BigInteger[2]; // Holds solution to yp*p + yq*q = 1
-		roots = xGCD(p, q); // Solves yp*p + yq*q = 1
-		BigInteger n = p.multiply(q); // Recalculate n instead of reading it
-		int counter = 1; // Counter to track line written
-
-		// Try opening/creating the files
+		BigInteger n = p.multiply(q); // Public Key
+		
 		try {
-			File outFile = new File("Decrypted.txt");
+			File outFile = new File("/home/mcanv/Downloads/AgVeriFiles/Decrypted.txt");
 			PrintWriter writer = new PrintWriter(outFile);
 
 			final BigInteger ONE = new BigInteger("1");
 			final BigInteger FOUR = new BigInteger("4");
 
 			BigInteger N = p.multiply(q);
-			BigInteger m_p1 = c.modPow(p.add(BigInteger.ONE).divide(FOUR), p);
-			BigInteger m_p2 = p.subtract(m_p1);
-			BigInteger m_q1 = c.modPow(q.add(BigInteger.ONE).divide(FOUR), q);
-			BigInteger m_q2 = q.subtract(m_q1);
+			//x denk a^(p+1)/4%p
+			BigInteger a1 = c.modPow(p.add(BigInteger.ONE).divide(FOUR), p);
+			BigInteger a2 = p.subtract(a1);//p2
+			BigInteger b1 = c.modPow(q.add(BigInteger.ONE).divide(FOUR), q);
+			BigInteger b2 = q.subtract(b1);//q2
 
-			BigInteger[] ext = xGCD(p, q);
-			BigInteger y_p = ext[0];
-			BigInteger y_q = ext[1];
-
-			// y_p*p*m_q + y_q*q*m_p (mod n)
-			BigInteger d1 = y_p.multiply(p).multiply(m_q1).add(y_q.multiply(q).multiply(m_p1)).mod(N);
-			BigInteger d2 = y_p.multiply(p).multiply(m_q2).add(y_q.multiply(q).multiply(m_p1)).mod(N);
-			BigInteger d3 = y_p.multiply(p).multiply(m_q1).add(y_q.multiply(q).multiply(m_p2)).mod(N);
-			BigInteger d4 = y_p.multiply(p).multiply(m_q2).add(y_q.multiply(q).multiply(m_p2)).mod(N);
-
-			String dec1 = new String(d1.toByteArray(),Charset.forName("ascii"));
-			String dec2 = new String(d1.toByteArray(),Charset.forName("ascii"));
-			String dec3 = new String(d1.toByteArray(),Charset.forName("ascii"));
-			String dec4 = new String(d1.toByteArray(),Charset.forName("ascii"));
 			
-			// Print all 4 values to the output file
-			writer.println("Kokler : ");
-			writer.println(dec1);// m_p1
-			writer.println(dec2);// m_p2
-			writer.println(dec3);// m_q1
-			writer.println(dec4);// m_q2
-			writer.println("");
+			BigInteger d1 = ChineseRemaninder(a1, b1, p, q);
+			BigInteger d2 = ChineseRemaninder(a1, b2, p, q);
+			BigInteger d3 = ChineseRemaninder(a2, b1, p, q);
+			BigInteger d4 = ChineseRemaninder(a2, b2, p, q);
 
+			String P1 = new String(d1.toByteArray(),Charset.forName("ascii"));
+			String P2 = new String(d2.toByteArray(),Charset.forName("ascii"));
+			String P3 = new String(d3.toByteArray(),Charset.forName("ascii"));
+			String P4 = new String(d4.toByteArray(),Charset.forName("ascii"));
+			
+			// Açık metinler elde edildi
+			if(P1.substring(P1.length()-2,P1.length())
+					.equals(P1.substring(P1.length()-4,P1.length()-2))){
+				writer.println(P1.substring(0,P1.length()-2));
+			}else if (P2.substring(P2.length()-2,P2.length())
+					.equals(P2.substring(P2.length()-4,P2.length()-2))) {
+				writer.println(P2.substring(0,P2.length()-2));
+			}else if (P3.substring(P3.length()-2,P3.length())
+					.equals(P3.substring(P3.length()-4,P3.length()-2))) {
+				writer.println(P3.substring(0,P3.length()-2));
+			}else if (P4.substring(P4.length()-2,P4.length())
+					.equals(P4.substring(P4.length()-4,P4.length()-2))) {
+				writer.println(P4.substring(0,P4.length()-2));
+				
+			}
+			
 			/*
 			 * String msg = "Hello there!"; BigInteger bi = new
 			 * BigInteger(msg.getBytes()); System.out.println(new
@@ -101,47 +99,28 @@ public class Decrypt {
 
 			// Close the writer
 			writer.close();
-			System.out.println("Successfully decrypted the ciphertext!");
+			System.out.println("Deşifreleme tamamlandı!");
 
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found or error creating file!");
+			System.out.println("dosya oluşturalamadı!");
 		}
 	}
 
-	private static BigInteger[] xGCD(BigInteger p, BigInteger q) {
-		BigInteger x = BigInteger.ZERO; // x = 0
-		BigInteger px = BigInteger.ONE; // px = 1
-		BigInteger y = BigInteger.ONE; // y = 1
-		BigInteger py = BigInteger.ZERO; // py = 0
-
-		// As long as q doesn't equal zero
-		while (!q.equals(BigInteger.ZERO)) {
-			// Compute quotient and remainder
-			BigInteger[] qr = p.divideAndRemainder(q); // dive and compute
-														// remainder
-			BigInteger quotient = qr[0]; // quotient stored in qr[0]
-
-			BigInteger temp = p; // Need to hold previous value for storage
-			p = q; // swap
-			q = qr[1]; // q takes on remainder
-
-			temp = x; // swap
-			x = px.subtract(quotient.multiply(x)); // compute next x
-			px = temp; // swap
-
-			temp = y; // swap
-			y = py.subtract(quotient.multiply(y)); // compute next y
-			py = temp; // swap
-		}
-
-		BigInteger[] roots; // Store values as roots
-		roots = new BigInteger[2]; // Store values as roots
-		roots[0] = px; // Indice 0 is yp
-		roots[1] = py; // Indice 1 is yq
-
-		return roots;
+       private static BigInteger ChineseRemaninder(BigInteger a,BigInteger b,BigInteger p,BigInteger q){
+		
+		BigInteger M = p.multiply(q);
+		BigInteger M1 = M.divide(p);
+		BigInteger M2 = M.divide(q);
+		BigInteger M1_inv = M1.modInverse(p);
+		BigInteger M2_inv = M2.modInverse(q);
+		
+		BigInteger solition = (a.multiply(M1).multiply(M1_inv).add(b.multiply(M2).multiply(M2_inv))).mod(M);
+		
+		return solition;
+		
+		
+		
 	}
-
 	private String GetP() {
 		String inFile = "Private.txt"; // The file must be named
 		String line = ""; // Empty string to read into
@@ -195,8 +174,8 @@ public class Decrypt {
 		return line;
 	}
 
-	public static void main(String args[]) {
+	/*public static void main(String args[]) {
 		Decrypt decryption = new Decrypt();
-	}
+	}*/
 
 }
