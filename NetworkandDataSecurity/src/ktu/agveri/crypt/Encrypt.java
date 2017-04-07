@@ -79,9 +79,15 @@ public  class Encrypt {
 			BigInteger message = new BigInteger(text.getBytes(Charset.forName("ascii")));
 			// System.out.println(message);
 			final BigInteger TWO = new BigInteger("2");
-			BigInteger ciphertext = message.modPow(TWO, n);
-
-			writer.print(ciphertext);
+			try {
+				if(!message.mod(n).equals(0)){
+					BigInteger ciphertext = message.modPow(TWO, n);//ciphertext = message^2(mod n)
+					writer.print(ciphertext);
+				}	
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println("Mesaj ile Public key aralarında asal degil");
+			}
 
 			writer.close();
 			//System.out.println("Successfully encrypted plaintext!");
