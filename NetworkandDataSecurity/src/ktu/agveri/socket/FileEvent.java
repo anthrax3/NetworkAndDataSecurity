@@ -1,8 +1,13 @@
-package ktu.socket.networking;
+package ktu.agveri.socket;
 
 import java.io.Serializable;
 
-
+/**
+ * Seriazlizable yapmamın sebebi,dosyanin o anki durumunu kaydedip daha sonra 
+ * nesneyi tekrar oluşturmak.Dosyayı jvm içersindeki sabit diske kaydedebilirim
+ * veya transfer yapabilirm
+ * @author mcanv
+ */
 public class FileEvent implements Serializable {
 
 	public FileEvent() {
@@ -14,7 +19,7 @@ public class FileEvent implements Serializable {
 	private String sourceDirectory;
 	private String filename;
 	private long fileSize;
-	private byte[] fileData;
+	private byte[] fileData; //Serileştirme yapılırken byte çevirmeliyim.
 	private String status;
 
 	public String getDestinationDirectory() {
