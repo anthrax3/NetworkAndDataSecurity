@@ -1,4 +1,4 @@
-package ktu.socket.networking;
+package ktu.agveri.socket;
 
 import java.io.*;
 import java.net.Socket;
@@ -10,7 +10,7 @@ public class Client {
 	private boolean isConnected = false;
 	private String sourceFilePath = "Encrypted.txt";
 	private FileEvent fileEvent = null;
-	private String destinationPath = "/home/mcanv/Downloads/";
+	private String destinationPath = "/home/mcanv/Downloads/AgVeriFiles/";
 
 	public Client() {
 
@@ -55,19 +55,19 @@ public class Client {
 				}
 				fileEvent.setFileSize(len);
 				fileEvent.setFileData(fileBytes);
-				fileEvent.setStatus("Success");
+				fileEvent.setStatus("Basarili");
 			} catch (Exception e) {
 				e.printStackTrace();
-				fileEvent.setStatus("Error");
+				fileEvent.setStatus("Hata");
 			}
 		} else {
-			System.out.println("path specified is not pointing to a file");
+			//System.out.println("path specified is not pointing to a file");
 			fileEvent.setStatus("Error");
 		}
 		// Now writing the FileEvent object to socket
 		try {
 			outputStream.writeObject(fileEvent);
-			System.out.println("Done...Going to exit");
+			//System.out.println("Done...Going to exit");
 			Thread.sleep(3000);
 			System.exit(0);
 		} catch (IOException e) {

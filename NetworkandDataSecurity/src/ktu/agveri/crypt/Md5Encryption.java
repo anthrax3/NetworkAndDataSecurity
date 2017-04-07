@@ -1,4 +1,4 @@
-package ktu.algorithm.agveri;
+package ktu.agveri.crypt;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,9 +22,9 @@ public class Md5Encryption {
 		}
 		return digestText;
 	}
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Md5Encryption md5 = new Md5Encryption();
 		//md5.hash("ornek");
 		System.out.println(md5.hash("ornek"));
-	}
+	}*/
 }

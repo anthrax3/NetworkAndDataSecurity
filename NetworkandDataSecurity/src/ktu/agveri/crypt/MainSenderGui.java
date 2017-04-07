@@ -3,28 +3,34 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package gui;
+package ktu.agveri.crypt;
 
+import ktu.agveri.crypt.Encrypt;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import javafx.stage.FileChooser;
+import java.math.BigInteger;
 import javax.swing.JFileChooser;
-import javax.swing.JLabel;
-import ktu.algorithm.agveri.Md5Encryption;
+import ktu.agveri.crypt.Md5Encryption;
+import ktu.agveri.socket.Client;
+import ktu.agveri.socket.Server;
 
 /**
  *
  * @author mcanv
  */
-public class MainGui extends javax.swing.JFrame {
+public class MainSenderGui extends javax.swing.JFrame {
 
+        private String Inputfile;
+        private String hashText;
+        
+    
     /**
      * Creates new form MainGui
      */
-    public MainGui() {
+    public MainSenderGui() {
         initComponents();
     }
 
@@ -39,23 +45,15 @@ public class MainGui extends javax.swing.JFrame {
 
         fileChooser = new javax.swing.JFileChooser();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        Hashing = new javax.swing.JButton();
+        Encrypt = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         hashVar = new javax.swing.JTextArea();
-        jButton6 = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        encryptedLabel = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         openPath = new javax.swing.JTextArea();
-        jScrollPane5 = new javax.swing.JScrollPane();
-        hashVar2 = new javax.swing.JTextArea();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
@@ -70,29 +68,22 @@ public class MainGui extends javax.swing.JFrame {
             }
         });
 
-        jButton3.setText("Hashle");
-        jButton3.addMouseListener(new java.awt.event.MouseAdapter() {
+        Hashing.setText("Hashle");
+        Hashing.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton3MouseClicked(evt);
+                HashingMouseClicked(evt);
             }
         });
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        Hashing.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-
-        jButton4.setText("Sifrele");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                HashingActionPerformed(evt);
             }
         });
 
-        jButton5.setText("Sifreyi Çöz");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        Encrypt.setText("Sifrele");
+        Encrypt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                EncryptActionPerformed(evt);
             }
         });
 
@@ -100,29 +91,15 @@ public class MainGui extends javax.swing.JFrame {
         hashVar.setRows(5);
         jScrollPane1.setViewportView(hashVar);
 
-        jButton6.setText("Doğrula");
-
-        jTextArea2.setColumns(20);
-        jTextArea2.setRows(5);
-        jScrollPane2.setViewportView(jTextArea2);
+        encryptedLabel.setColumns(20);
+        encryptedLabel.setRows(5);
+        jScrollPane2.setViewportView(encryptedLabel);
 
         jLabel2.setText("Gonderilecek Dosya");
-
-        jTextArea3.setColumns(20);
-        jTextArea3.setRows(5);
-        jScrollPane3.setViewportView(jTextArea3);
-
-        jLabel3.setText("Gelen Dosya");
-
-        jLabel4.setText("Socuç");
 
         openPath.setColumns(20);
         openPath.setRows(5);
         jScrollPane4.setViewportView(openPath);
-
-        hashVar2.setColumns(20);
-        hashVar2.setRows(5);
-        jScrollPane5.setViewportView(hashVar2);
 
         jMenu1.setText("File");
 
@@ -153,59 +130,42 @@ public class MainGui extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton6, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Encrypt, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Hashing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
                     .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane3)
+                    .addComponent(jScrollPane4)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel4)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE)
-                    .addComponent(jScrollPane5))
+                        .addGap(234, 234, 234)
+                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton2, jButton3, jButton4, jButton5});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Encrypt, Hashing, jButton2});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(7, 7, 7)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton3)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Hashing))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Encrypt)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel3)
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton5)
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(99, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
@@ -213,26 +173,49 @@ public class MainGui extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
+                Client client = new Client();
+		client.connect();
+		client.sendFile();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void HashingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HashingActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+    }//GEN-LAST:event_HashingActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void EncryptActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncryptActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        Encrypt en = new Encrypt();
+        
+                String inFile = "Encrypted.txt";
+		String line = ""; 
+		String text = "";
+		try {
+			FileReader reader = new FileReader(inFile); 
+			BufferedReader bReader = new BufferedReader(reader);
+			try {
+				while ((line = bReader.readLine()) != null) {
+					text = text + line;
+				}
+                                encryptedLabel.setText(text);
+				//System.out.println("doya okundu!");
+				bReader.close();
+			} catch (IOException e) {
+				//System.out.println("Dosya okunamadı!");
+			}
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+		} catch (FileNotFoundException e) {
+			//System.out.println("Dosya bulunamadı!");
+		}
+
+    }//GEN-LAST:event_EncryptActionPerformed
 
     private void ExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitActionPerformed
         // TODO add your handling code here:
         System.exit(0);
     }//GEN-LAST:event_ExitActionPerformed
 
-    private String Inputfile;
+    
+    
     private void OpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_OpenActionPerformed
         // TODO add your handling code here:
         int returnVal = fileChooser.showOpenDialog(this);
@@ -241,43 +224,46 @@ public class MainGui extends javax.swing.JFrame {
             try{
                 openPath.read(new FileReader(file.getAbsoluteFile() ), null);
                 openPath.setText(file.getAbsolutePath());
-                Inputfile = file.getAbsolutePath().toString();
+                Inputfile = file.getAbsolutePath();
             }catch(IOException ex){
-                System.out.println("problem accessing file"+file.getAbsolutePath());
+               // System.out.println("problem accessing file"+file.getAbsolutePath());
             }
         }else {
-            System.out.println("File access cancelled by user");
+          //  System.out.println("File access cancelled by user");
         }
     }//GEN-LAST:event_OpenActionPerformed
 
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+    private void HashingMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HashingMouseClicked
         // TODO add your handling code here:
         Md5Encryption md5 = new Md5Encryption();
        // System.out.println(Inputfile);
-                String inFile = Inputfile; // The name of the file to be read in
-		String line = ""; // Store each line of the file here
-		String text = ""; // Store the entire file's text here
-		// Try to instantiate both readers
+                String inFile = Inputfile;
+		String line = ""; 
+		String text = "";
 		try {
-			FileReader reader = new FileReader(inFile); // Create a filereader
+			FileReader reader = new FileReader(inFile); 
 			BufferedReader bReader = new BufferedReader(reader);
-			// Try to actually read from the file
 			try {
 				while ((line = bReader.readLine()) != null) {
 					text = text + line;
 				}
-				System.out.println("Successfully read plaintext from file!");
+				//System.out.println("doya okundu!");
 				bReader.close();
 			} catch (IOException e) {
-				System.out.println("Error reading file!");
+				//System.out.println("Dosya okunamadı!");
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found or does not exist!");
+			//System.out.println("Dosya bulunamadı!");
 		}
-        hashVar.setText(md5.hash(text));
-    }//GEN-LAST:event_jButton3MouseClicked
+             
+                hashText = md5.hash(text);
+                hashVar.setText(md5.hash(text));
+    }//GEN-LAST:event_HashingMouseClicked
 
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -295,47 +281,51 @@ public class MainGui extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSenderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSenderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSenderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(MainGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(MainSenderGui.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        //</editor-fold>
+        
+            
+        
+        
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainGui().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainSenderGui().setVisible(true);
         });
+        
+        Thread thread = new Thread(() -> {
+            Server server  = new Server();
+            server.doConnect();
+            server.downloadFile();
+        });
+        
+        thread.start();
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton Encrypt;
     private javax.swing.JMenuItem Exit;
+    private javax.swing.JButton Hashing;
     private javax.swing.JMenuItem Open;
+    private javax.swing.JTextArea encryptedLabel;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JTextArea hashVar;
-    private javax.swing.JTextArea hashVar2;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JTextArea openPath;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -1,4 +1,4 @@
-package ktu.socket.networking;
+package ktu.agveri.socket;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -17,7 +17,7 @@ public class Server {
 	private FileOutputStream fileOutputStream = null;
 
 	public Server() {
-
+            
 	}
 
 	/**
