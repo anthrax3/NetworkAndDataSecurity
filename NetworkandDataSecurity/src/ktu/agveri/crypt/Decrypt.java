@@ -32,6 +32,7 @@ public class Decrypt {
 				while ((line = bReader.readLine()) != null) {
 					text = text + line;
 				}
+                                //System.out.println("Encrypted text : " +text);
 				System.out.println("Şifreli dosya okundu");
 				bReader.close();
 				return text;
@@ -46,7 +47,7 @@ public class Decrypt {
 	}
 
 	private void ComputeRoots(BigInteger c, BigInteger p, BigInteger q) {
-
+                System.out.println("Desifreleme basladi");
 		BigInteger n = p.multiply(q); // Public Key
 		
 		try {
@@ -75,21 +76,25 @@ public class Decrypt {
 			String P4 = new String(d4.toByteArray(),Charset.forName("ascii"));
 			
 			// Açık metinler elde edildi
+                        
 			if(P1.substring(P1.length()-2,P1.length())
 					.equals(P1.substring(P1.length()-4,P1.length()-2))){
-				writer.println(P1.substring(0,P1.length()-2));
+                                                        P1 = P1.substring(0,P1.length()-2);
+				writer.append(P1);
 			}else if (P2.substring(P2.length()-2,P2.length())
 					.equals(P2.substring(P2.length()-4,P2.length()-2))) {
-				writer.println(P2.substring(0,P2.length()-2));
+                                                        P2 = P2.substring(0,P2.length()-2);
+				writer.append(P2);
 			}else if (P3.substring(P3.length()-2,P3.length())
 					.equals(P3.substring(P3.length()-4,P3.length()-2))) {
-				writer.println(P3.substring(0,P3.length()-2));
+                                                        P3 = P3.substring(0,P3.length()-2);
+				writer.append(P3);
 			}else if (P4.substring(P4.length()-2,P4.length())
 					.equals(P4.substring(P4.length()-4,P4.length()-2))) {
-				writer.println(P4.substring(0,P4.length()-2));
-				
+                                                        P4 = P4.substring(0,P4.length()-2);
+				writer.append(P4);
 			}
-			
+			System.out.println("KOK 1 : "+ P1+ "KOK 2 : "+ P2 + "KOK 3 :" + P3 + " KOK 4 :" +P4);
 			// Close the writer
 			writer.close();
 			System.out.println("Deşifreleme tamamlandı!");
