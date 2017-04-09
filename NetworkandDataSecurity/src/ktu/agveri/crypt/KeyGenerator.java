@@ -57,7 +57,6 @@ public class KeyGenerator {
 			prime = new BigInteger(number); 
 			prime = prime.nextProbablePrime();
 		}
-		// Return the prime for testing at the beginning of the loop
 		return prime;
 	}
 
@@ -68,7 +67,7 @@ public class KeyGenerator {
 			writer.println(n);
 			writer.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found or error creating file!");
+			System.out.println("Dosya olusturulamadı");
 		}
 	}
 
@@ -80,7 +79,7 @@ public class KeyGenerator {
 			writer.println(q);
 			writer.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found or error creating file!");
+			System.out.println("Dosya olusturulamadı!");
 		}
 	}
 
