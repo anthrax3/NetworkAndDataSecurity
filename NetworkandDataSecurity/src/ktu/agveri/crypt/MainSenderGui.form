@@ -69,7 +69,7 @@
                   <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="234" max="-2" attributes="0"/>
-                      <Component id="jButton2" linkSize="1" max="32767" attributes="0"/>
+                      <Component id="DosyalariGonder" linkSize="1" max="32767" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -98,19 +98,19 @@
                   <Component id="jScrollPane2" min="-2" pref="91" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="jButton2" min="-2" pref="25" max="-2" attributes="0"/>
+              <Component id="DosyalariGonder" min="-2" pref="25" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="jButton2">
+    <Component class="javax.swing.JButton" name="DosyalariGonder">
       <Properties>
         <Property name="text" type="java.lang.String" value="Dosyayi G&#xf6;nder"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DosyalariGonderActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Hashing">

@@ -44,7 +44,7 @@ public class MainSenderGui extends javax.swing.JFrame {
     private void initComponents() {
 
         fileChooser = new javax.swing.JFileChooser();
-        jButton2 = new javax.swing.JButton();
+        DosyalariGonder = new javax.swing.JButton();
         Hashing = new javax.swing.JButton();
         Encrypt = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -61,10 +61,10 @@ public class MainSenderGui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton2.setText("Dosyayi Gönder");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        DosyalariGonder.setText("Dosyayi Gönder");
+        DosyalariGonder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                DosyalariGonderActionPerformed(evt);
             }
         });
 
@@ -140,12 +140,12 @@ public class MainSenderGui extends javax.swing.JFrame {
                     .addComponent(jScrollPane4)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(234, 234, 234)
-                        .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(DosyalariGonder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Encrypt, Hashing, jButton2});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DosyalariGonder, Encrypt, Hashing});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,19 +164,19 @@ public class MainSenderGui extends javax.swing.JFrame {
                     .addComponent(Encrypt)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(DosyalariGonder, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void DosyalariGonderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DosyalariGonderActionPerformed
         // TODO add your handling code here:
                 Client client = new Client();
 		client.connect();
 		client.sendFile();
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_DosyalariGonderActionPerformed
 
     private void HashingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HashingActionPerformed
         // TODO add your handling code here:
@@ -311,6 +311,7 @@ public class MainSenderGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton DosyalariGonder;
     private javax.swing.JButton Encrypt;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JButton Hashing;
@@ -318,7 +319,6 @@ public class MainSenderGui extends javax.swing.JFrame {
     private javax.swing.JTextArea encryptedLabel;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JTextArea hashVar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuBar jMenuBar1;

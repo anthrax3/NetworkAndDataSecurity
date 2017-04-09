@@ -50,7 +50,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
         hashLabel = new javax.swing.JTextArea();
         decryptButton = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        hashle = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -87,10 +87,10 @@ public class MainReceiverGui extends javax.swing.JFrame {
 
         jLabel2.setText("Gelen Dosya");
 
-        jButton2.setText("Hashle");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        hashle.setText("Hashle");
+        hashle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                hashleActionPerformed(evt);
             }
         });
 
@@ -132,7 +132,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
                             .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel2)
                             .addComponent(decryptButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(hashle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE)
@@ -167,7 +167,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
                 .addGap(50, 50, 50)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(hashle))
                 .addGap(59, 59, 59)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton3)
@@ -199,7 +199,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
         // TODO add your handling code here:
         Decrypt de = new Decrypt();
         
-        String inFile = "/home/mcanv/Downloads/AgVeriFiles/Decrypted.txt";
+                String inFile = "/home/mcanv/Downloads/AgVeriFiles/Decrypted.txt";
 		String line = ""; 
 		String text = "";
 		try {
@@ -209,6 +209,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
 				while ((line = bReader.readLine()) != null) {
 					text = text + line;
 				}
+                                System.out.println(" reciever text :" +text);
                                 decryptedLabel.setText(text);
 				//System.out.println("doya okundu!");
 				bReader.close();
@@ -229,7 +230,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
             try{
                 openFile.read(new FileReader(file.getAbsoluteFile() ), null);
                 openFile.setText(file.getAbsolutePath());
-                 Inputfile = file.getAbsolutePath().toString();
+                Inputfile = file.getAbsolutePath();
             }catch(IOException ex){
                // System.out.println("problem accessing file"+file.getAbsolutePath());
             }
@@ -238,7 +239,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_OpenFileActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void hashleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hashleActionPerformed
         // TODO add your handling code here:
          Md5Encryption md5 = new Md5Encryption();
        // System.out.println(Inputfile);
@@ -262,7 +263,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
 			//System.out.println("Dosya bulunamadı!");
 		}
                 hashLabel.setText(md5.hash(text));
-    }//GEN-LAST:event_jButton2ActionPerformed
+    }//GEN-LAST:event_hashleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -292,10 +293,8 @@ public class MainReceiverGui extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new MainReceiverGui().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new MainReceiverGui().setVisible(true);
         });
     }
 
@@ -306,7 +305,7 @@ public class MainReceiverGui extends javax.swing.JFrame {
     private javax.swing.JTextArea decryptedLabel;
     private javax.swing.JFileChooser fileChooser;
     private javax.swing.JTextArea hashLabel;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton hashle;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
