@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.nio.charset.Charset;
-import ktu.agveri.crypt.Md5Encryption;
 
 public  class Encrypt {
 
@@ -31,15 +30,15 @@ public  class Encrypt {
 				while ((line = bReader.readLine()) != null) {
 					text = text + line;
 				}
-				//System.out.println("Successfully read plaintext from file!");
+				//System.out.println("Input.txt okunu!");
 				bReader.close();
 				return text;
 			} catch (IOException e) {
-				//System.out.println("Error reading file!");
+				//System.out.println("Dosya okundu!");
 			}
 
 		} catch (FileNotFoundException e) {
-			//System.out.println("File not found or does not exist!");
+			//System.out.println("Dosya bulunamadı!");
 		}
                 
 		return text;
@@ -68,8 +67,6 @@ public  class Encrypt {
 	}
 
 	public void Encrypt(String text, BigInteger n) {
-		int pos = 1; // Position of the char we are at (non-zero based)
-		String toEncrypt = ""; 
                 Md5Encryption md5 = new Md5Encryption();
                 text = md5.hash(text);
 		// Try to create and write to the file
@@ -90,9 +87,9 @@ public  class Encrypt {
 			}
 
 			writer.close();
-			//System.out.println("Successfully encrypted plaintext!");
+			//System.out.println("Şifreleme başarılı!");
 		} catch (FileNotFoundException e) {
-			//System.out.print("File not found or does not exist!");
+			//System.out.print("Dosya oluşturulamadı!");
 		}
 	}
 

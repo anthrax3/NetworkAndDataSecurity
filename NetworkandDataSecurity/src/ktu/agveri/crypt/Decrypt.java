@@ -90,13 +90,6 @@ public class Decrypt {
 				
 			}
 			
-			/*
-			 * String msg = "Hello there!"; BigInteger bi = new
-			 * BigInteger(msg.getBytes()); System.out.println(new
-			 * String(bi.toByteArray())); // prints "Hello there!"
-			 */
-			// Increment the counter
-
 			// Close the writer
 			writer.close();
 			System.out.println("Deşifreleme tamamlandı!");
@@ -116,61 +109,44 @@ public class Decrypt {
 		
 		BigInteger solition = (a.multiply(M1).multiply(M1_inv).add(b.multiply(M2).multiply(M2_inv))).mod(M);
 		
-		return solition;
-		
-		
-		
+		return solition;		
 	}
 	private String GetP() {
-		String inFile = "Private.txt"; // The file must be named
-		String line = ""; // Empty string to read into
-
-		// Try to instantiate the readers
+		String inFile = "Private.txt";
+		String line = ""; 
 		try {
 			FileReader reader = new FileReader(inFile);
 			BufferedReader bReader = new BufferedReader(reader);
-
-			// Try to read from the file
 			try {
-				// We only need to read one line
 				line = bReader.readLine();
 				bReader.close();
 				return line;
 			} catch (IOException e) {
-				System.out.println("Error reading file!");
+				System.out.println("Dosya okunamadı");
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found or does not exist!");
+			System.out.println("Dosya bulunamadı!");
 		}
-
-		// Should never get here, keeps the compiler happy
 		return line;
 	}
 
 	private String GetQ() {
-		String inFile = "Private.txt"; // The file must be named
-		String line = ""; // Empty string to read into
-
-		// Try to instantiate the readers
+		String inFile = "Private.txt";
+		String line = ""; 
 		try {
 			FileReader reader = new FileReader(inFile);
 			BufferedReader bReader = new BufferedReader(reader);
-
-			// Try to read from the file
 			try {
-				// Read in the second line
-				bReader.readLine();
+				bReader.readLine();//ikinci satırı okumak için ilk satırı okudum
 				line = bReader.readLine();
 				bReader.close();
 				return line;
 			} catch (IOException e) {
-				System.out.println("Error reading file!");
+				System.out.println("Dosya okunamadı!");
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("File not found or does not exist!");
+			System.out.println("Dosya bulunamadı!");
 		}
-
-		// Should never get here, keeps the compiler happy
 		return line;
 	}
 
