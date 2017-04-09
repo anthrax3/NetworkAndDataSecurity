@@ -68,12 +68,17 @@ public  class Encrypt {
 
 	public void Encrypt(String text, BigInteger n) {
                 Md5Encryption md5 = new Md5Encryption();
-                text = md5.hash(text);
-		// Try to create and write to the file
+		StringBuilder sb = new StringBuilder();
+		text = md5.hash(text);//md5 ile hashliyorum
+		sb = sb.append(text);//string buildera ekledim
+		String lastChar = sb.substring(sb.length()-2,sb.length());//son iki karakteri alıyorum
+		sb =sb.append(lastChar);//son iki karakteri deşifrelemek için tekrar ekledi
+		System.out.println("MD5 ile hashlenms hali=" + sb);
+		
 		try {
 			File outFile = new File("Encrypted.txt"); 
                         PrintWriter writer = new PrintWriter(outFile); 	
-			BigInteger message = new BigInteger(text.getBytes(Charset.forName("ascii")));
+			BigInteger message = new BigInteger(sb.toString().getBytes(Charset.forName("ascii")));
 			// System.out.println(message);
 			final BigInteger TWO = new BigInteger("2");
 			try {
