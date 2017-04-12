@@ -80,9 +80,10 @@ public  class Encrypt {
                         PrintWriter writer = new PrintWriter(outFile); 	
 			BigInteger message = new BigInteger(sb.toString().getBytes(Charset.forName("ascii")));
 			// System.out.println(message);
+                        final BigInteger ZERO = new BigInteger("0"); 
 			final BigInteger TWO = new BigInteger("2");
 			try {
-				if(!message.mod(n).equals(0)){
+				if(!message.mod(n).equals(ZERO)){
 					BigInteger ciphertext = message.modPow(TWO, n);//ciphertext = message^2(mod n)
 					writer.print(ciphertext);
 				}	
