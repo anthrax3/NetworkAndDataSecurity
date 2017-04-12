@@ -19,23 +19,16 @@ public class Server {
 	public Server() {
             
 	}
-
-	/**
-	 * Baglanti gerceklesti
-	 */
 	public void doConnect() {
 		try {
 			serverSocket = new ServerSocket(9003);
 			socket = serverSocket.accept();
 			inputStream = new ObjectInputStream(socket.getInputStream());
 		} catch (IOException e) {
-			e.printStackTrace();
 		}
 	}
 
-	/**
-	 * Dosyayı indiriyorum
-	 */
+	
 	public void downloadFile() {
 		try {
 			fileEvent = (FileEvent) inputStream.readObject();
@@ -52,22 +45,17 @@ public class Server {
 			fileOutputStream.write(fileEvent.getFileData());
 			fileOutputStream.flush();
 			fileOutputStream.close();
-			System.out.println("Cikan Dosya : " + outputFile + " basariyla kaydedildi.");
+			System.out.println("Kaydedilen Dosya : " + outputFile + " basariyla kaydedildi.");
 			Thread.sleep(3000);
 			System.exit(0);
 
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (IOException | ClassNotFoundException | InterruptedException e) {
 		}
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Server server = new Server();
 		server.doConnect();
 		server.downloadFile();
-	}
+	}*/
 }
