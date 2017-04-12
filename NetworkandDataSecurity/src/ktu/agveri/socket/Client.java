@@ -3,17 +3,19 @@ package ktu.agveri.socket;
 import java.io.*;
 import java.net.Socket;
 
-public class Client {
+public final class Client {
 
 	private Socket socket = null;
 	private ObjectOutputStream outputStream = null;
 	private boolean isConnected = false;
-	private String sourceFilePath = "Encrypted.txt";
+	//private String sourceFilePath = "Encrypted.txt";
 	private FileEvent fileEvent = null;
-	private String destinationPath = "/home/mcanv/Downloads/AgVeriFiles/";
+	private final String destinationPath = "/home/mcanv/Downloads/AgVeriFiles/";
 
-	public Client() {
-
+	public Client(String sourceFilePath) {
+          //  Client client = new Client(sourceFilePath);
+            connect();
+            sendFile(sourceFilePath);
 	}
 
 	/**
@@ -26,15 +28,15 @@ public class Client {
 				outputStream = new ObjectOutputStream(socket.getOutputStream());
 				isConnected = true;
 			} catch (IOException e) {
-				e.printStackTrace();
 			}
 		}
 	}
 
 	/**
 	 * FileObject class'i yardimiyla dosyayı yolluyorum
+         * @param sourceFilePath
 	 */
-	public void sendFile() {
+	public void sendFile(String sourceFilePath) {
 		fileEvent = new FileEvent();
 		String fileName = sourceFilePath.substring(sourceFilePath.lastIndexOf("/") + 1, sourceFilePath.length());
 		String path = sourceFilePath.substring(0, sourceFilePath.lastIndexOf("/") + 1);
@@ -56,8 +58,7 @@ public class Client {
 				fileEvent.setFileSize(len);
 				fileEvent.setFileData(fileBytes);
 				fileEvent.setStatus("Basarili");
-			} catch (Exception e) {
-				e.printStackTrace();
+			} catch (IOException e) {
 				fileEvent.setStatus("Hata");
 			}
 		} else {
@@ -70,17 +71,14 @@ public class Client {
 			//System.out.println("Done...Going to exit");
 			Thread.sleep(3000);
 			System.exit(0);
-		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+		} catch (IOException | InterruptedException e) {
 		}
 
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		Client client = new Client();
 		client.connect();
 		client.sendFile();
-	}
+	}*/
 }
