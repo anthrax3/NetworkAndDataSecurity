@@ -44,7 +44,7 @@ public class MainSenderGui extends javax.swing.JFrame {
     private void initComponents() {
 
         fileChooser = new javax.swing.JFileChooser();
-        DosyalariGonder = new javax.swing.JButton();
+        EncrypyedSend = new javax.swing.JButton();
         Hashing = new javax.swing.JButton();
         Encrypt = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -54,6 +54,7 @@ public class MainSenderGui extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         openPath = new javax.swing.JTextArea();
+        InputSend = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         Open = new javax.swing.JMenuItem();
@@ -61,10 +62,10 @@ public class MainSenderGui extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        DosyalariGonder.setText("Dosyayi Gönder");
-        DosyalariGonder.addActionListener(new java.awt.event.ActionListener() {
+        EncrypyedSend.setText("Şifreli Dosyayi Gönder");
+        EncrypyedSend.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                DosyalariGonderActionPerformed(evt);
+                EncrypyedSendActionPerformed(evt);
             }
         });
 
@@ -101,6 +102,13 @@ public class MainSenderGui extends javax.swing.JFrame {
         openPath.setRows(5);
         jScrollPane4.setViewportView(openPath);
 
+        InputSend.setText("Orjinal Dosyayi Gönder");
+        InputSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InputSendActionPerformed(evt);
+            }
+        });
+
         jMenu1.setText("File");
 
         Open.setText("Open File");
@@ -135,17 +143,18 @@ public class MainSenderGui extends javax.swing.JFrame {
                     .addComponent(Hashing, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane4)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(234, 234, 234)
-                        .addComponent(DosyalariGonder, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(EncrypyedSend, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(85, 85, 85)
+                        .addComponent(InputSend)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane4))
                 .addContainerGap())
         );
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {DosyalariGonder, Encrypt, Hashing});
+        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {Encrypt, EncrypyedSend, Hashing});
 
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -164,19 +173,21 @@ public class MainSenderGui extends javax.swing.JFrame {
                     .addComponent(Encrypt)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(28, 28, 28)
-                .addComponent(DosyalariGonder, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(EncrypyedSend, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(InputSend))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void DosyalariGonderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DosyalariGonderActionPerformed
+    private void EncrypyedSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EncrypyedSendActionPerformed
         // TODO add your handling code here:
-                Client client = new Client();
+                Client client = new Client("Encrypted.txt");
 		client.connect();
-		client.sendFile();
-    }//GEN-LAST:event_DosyalariGonderActionPerformed
+		//client.sendFile();
+    }//GEN-LAST:event_EncrypyedSendActionPerformed
 
     private void HashingActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HashingActionPerformed
         // TODO add your handling code here:
@@ -261,6 +272,13 @@ public class MainSenderGui extends javax.swing.JFrame {
                 hashVar.setText(md5.hash(text));
     }//GEN-LAST:event_HashingMouseClicked
 
+    private void InputSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InputSendActionPerformed
+        // TODO add your handling code here:
+                Client client = new Client(Inputfile);
+		client.connect();
+		//client.sendFile();
+    }//GEN-LAST:event_InputSendActionPerformed
+
     
     
     
@@ -311,10 +329,11 @@ public class MainSenderGui extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton DosyalariGonder;
     private javax.swing.JButton Encrypt;
+    private javax.swing.JButton EncrypyedSend;
     private javax.swing.JMenuItem Exit;
     private javax.swing.JButton Hashing;
+    private javax.swing.JButton InputSend;
     private javax.swing.JMenuItem Open;
     private javax.swing.JTextArea encryptedLabel;
     private javax.swing.JFileChooser fileChooser;
