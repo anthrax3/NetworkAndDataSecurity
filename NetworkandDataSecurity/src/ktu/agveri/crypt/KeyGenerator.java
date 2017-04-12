@@ -6,9 +6,9 @@ import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.util.Random;
 
-public class KeyGenerator {
-	private BigInteger q; 
-	private BigInteger p; 
+public final class KeyGenerator {
+	private final BigInteger q; 
+	private final BigInteger p; 
 	public BigInteger n; 
 
 	KeyGenerator() {
@@ -29,12 +29,9 @@ public class KeyGenerator {
 		final BigInteger ZERO = new BigInteger("0"); 
 		final BigInteger THREE = new BigInteger("3"); 
 		final BigInteger FOUR = new BigInteger("4"); 
+            // 3mod4 degerini saglıyor mu
 
-		// 3mod4 degerini saglıyor mu 
-		if ((((prime.subtract(THREE)).mod(FOUR)).equals(ZERO))) {
-			return true;
-		}
-		return false;
+		return (((prime.subtract(THREE)).mod(FOUR)).equals(ZERO));
 	}
 
 	private BigInteger GeneratePrime() {
@@ -57,6 +54,14 @@ public class KeyGenerator {
 			prime = new BigInteger(number); 
 			prime = prime.nextProbablePrime();
 		}
+                
+                
+               /* BigInteger p;
+                do {
+                   p=BigInteger.probablePrime(bitLength,r);
+                }
+                 while (!(Is3mod4(prime)))
+                return p*/
 		return prime;
 	}
 
