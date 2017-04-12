@@ -64,14 +64,15 @@
               </Group>
               <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" pref="686" max="32767" attributes="0"/>
-                  <Component id="jScrollPane2" max="32767" attributes="0"/>
-                  <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="234" max="-2" attributes="0"/>
-                      <Component id="DosyalariGonder" linkSize="1" max="32767" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Component id="EncrypyedSend" linkSize="1" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="85" max="-2" attributes="0"/>
+                      <Component id="InputSend" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="jScrollPane1" pref="641" max="32767" attributes="0"/>
+                  <Component id="jScrollPane2" max="32767" attributes="0"/>
+                  <Component id="jScrollPane4" alignment="0" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -98,19 +99,22 @@
                   <Component id="jScrollPane2" min="-2" pref="91" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-              <Component id="DosyalariGonder" min="-2" pref="25" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="EncrypyedSend" alignment="3" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="InputSend" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Component class="javax.swing.JButton" name="DosyalariGonder">
+    <Component class="javax.swing.JButton" name="EncrypyedSend">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Dosyayi G&#xf6;nder"/>
+        <Property name="text" type="java.lang.String" value="&#x15e;ifreli Dosyayi G&#xf6;nder"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="DosyalariGonderActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="EncrypyedSendActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="Hashing">
@@ -180,5 +184,13 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JButton" name="InputSend">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Orjinal Dosyayi G&#xf6;nder"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InputSendActionPerformed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
